@@ -61,4 +61,13 @@ public class ApplicationManager {
     public SessionHelper getSessionHelper() {
         return sessionHelper;
     }
+
+    public HttpSession newSession (){
+        //Создается новый екземпляр помошника
+        return new  HttpSession (this);
+    }
+    public String getProperty(String key){
+        return properties.getProperty(key);
+    }
+
 }
