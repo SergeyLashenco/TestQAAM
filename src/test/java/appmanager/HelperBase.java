@@ -3,7 +3,7 @@ package appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class HelperBase  {
+public class HelperBase {
     WebDriver wb;
 
     public HelperBase(WebDriver wb) {
