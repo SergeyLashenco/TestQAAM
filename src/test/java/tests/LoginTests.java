@@ -17,7 +17,9 @@ public class LoginTests extends TestBase {
     }
     @Test
     public void invalidLoginTest(){
+        logger.info("TEST Start");
         app.getSessionHelper().login("invalidName", "invalidPass");
         Assert.assertTrue(app.getHelperBase().iseEmpty(messageOfError));
+        logger.error("TEST STOP");
     }
 }
