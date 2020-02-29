@@ -20,6 +20,8 @@ dependencies {
     implementation 'org.hamcrest:hamcrest:2.2'
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
+    compile group: 'com.nycjv321', name: 'simple-http-client', version: '1.0'
+
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.1'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.1'
 }
