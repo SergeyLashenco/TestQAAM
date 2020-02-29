@@ -1,6 +1,7 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginTests extends TestBase {
@@ -11,12 +12,12 @@ public class LoginTests extends TestBase {
     @Test
     public void loginTest(){
         app.getSessionHelper().login("administrator","root");
-       // Assert.assertTrue(app.getHelperBase().iseEmpty(allProjects));
+        Assert.assertTrue(app.getHelperBase().iseEmpty(allProjects));
 
     }
     @Test
     public void invalidLoginTest(){
         app.getSessionHelper().login("invalidName", "invalidPass");
-        //Assert.assertTrue(app.getHelperBase().fiendElement(messageOfError));
+        Assert.assertTrue(app.getHelperBase().iseEmpty(messageOfError));
     }
 }
