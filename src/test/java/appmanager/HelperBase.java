@@ -1,9 +1,10 @@
 package appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
-public class HelperBase  {
+public class HelperBase {
     WebDriver wb;
 
     public HelperBase(WebDriver wb) {
@@ -22,6 +23,15 @@ public class HelperBase  {
                 wb.findElement(locator).clear();
                 wb.findElement(locator).sendKeys(text);
             }
+        }
+    }
+
+    public Boolean iseEmpty (By locator) {
+        try {
+            wb.findElement(locator);
+            return true;
+        }catch (NoSuchElementException ex ){
+            return false;
         }
     }
 }
