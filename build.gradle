@@ -11,6 +11,11 @@ repositories {
     mavenCentral()
 }
 
+
+configurations {
+    agent
+}
+
 dependencies {
     // JAX-B dependencies for JDK 9+
     implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
@@ -28,12 +33,16 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpclient:4.5.11'
     //implementation 'com.jayway.restassured:rest-assured:2.9.0'
     implementation 'com.jcabi:jcabi-github:1.0'
+    agent "org.aspectj:aspectjweaver:1.8.0"
+    compile "ru.yandex.qatools.allure:allure-testng-adaptor:1.4.0.RC4"
 }
+
 
 test
         {
             useTestNG()
         }
+
 
  task TestQAAM( type: Test ) {
      useTestNG() {
@@ -49,4 +58,8 @@ test
          systemProperty 'target', "${target}"
      }
  }
+
+TestQAAM.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
 
