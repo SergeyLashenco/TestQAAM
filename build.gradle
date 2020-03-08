@@ -29,7 +29,15 @@ dependencies {
     //implementation 'com.jayway.restassured:rest-assured:2.9.0'
     implementation 'com.jcabi:jcabi-github:1.0'
 }
-test
-        {
-            useTestNG()
-        }
+ task TestQAAM( type: Test ) {
+     useTestNG() {
+         suites 'src/test/resources/testng-qaam.xml'
+     }
+     if (project.hasProperty('browser')){
+         systemProperty 'browser', "${browser}"
+     }
+     if (project.hasProperty('target')){
+         systemProperty 'target', "${target}"
+     }
+ }
+

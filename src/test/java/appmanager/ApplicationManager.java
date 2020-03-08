@@ -5,17 +5,20 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
     private final Properties properties;
-    private WebDriver wb;
-    private String browser;
+    private WebDriver wd;
+    public String browser;
     private HelperBase helperBase;
     private SessionHelper sessionHelper;
 
@@ -32,26 +35,34 @@ public class ApplicationManager {
 
         File file = new File("./src/drivers/chromedriver");
         System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
-        switch (browser) {
-            case BrowserType.FIREFOX:
-                wb = new FirefoxDriver();
-                break;
-            case BrowserType.CHROME:
-                wb = new ChromeDriver();
-                break;
-            case BrowserType.IE:
-                wb = new InternetExplorerDriver();
-                break;
+
+        if ("".equals(properties.getProperty("selenium.server"))){
+            switch (browser) {
+                case BrowserType.FIREFOX:
+                    wd = new FirefoxDriver();
+                    break;
+                case BrowserType.CHROME:
+                    wd = new ChromeDriver();
+                    break;
+                case BrowserType.IE:
+                    wd = new InternetExplorerDriver();
+                    break;
+            }
+        }else {
+            DesiredCapabilities capabilities =  new DesiredCapabilities ();
+            capabilities.setBrowserName(browser);
+            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
 
-        wb.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        wb.get(properties.getProperty("web.baseUrl"));
-        helperBase = new HelperBase(wb);
-        sessionHelper = new SessionHelper(wb);
+
+        wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        wd.get(properties.getProperty("web.baseUrl"));
+        helperBase = new HelperBase(wd);
+        sessionHelper = new SessionHelper(wd);
     }
 
     public void stop() {
-        wb.quit();
+        wd.quit();
     }
 
     public HelperBase getHelperBase() {
